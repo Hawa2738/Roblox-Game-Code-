@@ -1,0 +1,47 @@
+local function getRandomNumber(min, max)
+    return math.random(min, max)
+end
+
+local MIN_NUMBER = 1
+local MAX_NUMBER = 100
+local MAX_ATTEMPTS = 5
+
+local randomNumber = getRandomNumber(MIN_NUMBER, MAX_NUMBER)
+
+local function isGuessCorrect(guess)
+    return guess == randomNumber
+end
+
+local function provideFeedback(guess)
+    if guess < randomNumber then
+        print("Too low! Try again.")
+    elseif guess > randomNumber then
+        print("Too high! Try again.")
+    else
+        print("Congratulations! You guessed it right!")
+    end
+end
+
+print("Welcome to the Guessing Game!")
+print("I've picked a number between", MIN_NUMBER, "and", MAX_NUMBER)
+print("You have", MAX_ATTEMPTS, "attempts to guess it.")
+
+for attempt = 1, MAX_ATTEMPTS do
+    io.write("Attempt " .. attempt .. ": Enter your guess: ")
+    local guess = tonumber(io.read())
+
+    if guess then
+        if isGuessCorrect(guess) then
+            print("Congratulations! You guessed it right in", attempt, "attempt(s)!")
+            break
+        else
+            provideFeedback(guess)
+        end
+    else
+        print("Invalid input. Please enter a number.")
+    end
+
+    if attempt == MAX_ATTEMPTS then
+        print("Sorry, you've run out of attempts. The correct number was:", randomNumber)
+    end
+end
